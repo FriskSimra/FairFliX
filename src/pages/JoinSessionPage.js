@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { sessionAPI } from '../services/api';
 import fairflixLogo from '../assets/FairFliX_logo.png';
 import filmReelBg from '../assets/film_reel_bg_addon.png';
 import joinTicket from '../assets/join_session_ticket.png';
@@ -17,23 +18,25 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
   const [readyUsers, setReadyUsers] = useState(3);
   const [isReady, setIsReady] = useState(false);
 
-  const joinSession = () => {
+  const joinSession = async () => {
     if (!sessionCode.trim()) {
       setErrorMessage('Please enter a session code');
       return;
     }
 
-    const code = sessionCode.toUpperCase();
-    const savedSessions = localStorage.getItem('fairflix-sessions');
-    const sessions = savedSessions ? JSON.parse(savedSessions) : [];
-    const session = sessions.find(s => s.code === code);
-
-    if (session) {
-      setErrorMessage('');
-      setJoinedSession(session);
-      setCurrentView('joined');
-    } else {
-      setErrorMessage(`Session code "${code}" not found. Please check the code with your host.`);
+    try {
+      const code = sessionCode.toUpperCase();
+      const session = await sessionAPI.getSessionByCode(code);
+      
+      if (session) {
+        setErrorMessage('');
+        setJoinedSession(session);
+        setCurrentView('joined');
+      } else {
+        setErrorMessage(`Session code "${code}" not found. Please check the code with your host.`);
+      }
+    } catch (error) {
+      setErrorMessage('Failed to join session. Please try again.');
     }
   };
 

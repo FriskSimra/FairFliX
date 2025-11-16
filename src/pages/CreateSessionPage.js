@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
+import { sessionAPI } from '../services/api';
 import fairflixLogo from '../assets/FairFliX_logo.png';
 import filmReelBg from '../assets/film_reel_bg_addon.png';
 import actionBoxFull from '../assets/actionbox_full.png';
@@ -10,10 +11,7 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
   const [currentView, setCurrentView] = useState('selection');
   const [sessionName, setSessionName] = useState('');
   const [sessionCode, setSessionCode] = useState('');
-  const [sessionHistory, setSessionHistory] = useState(() => {
-    const saved = localStorage.getItem('fairflix-sessions');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [sessionHistory, setSessionHistory] = useState([]);
   const [activeSession, setActiveSession] = useState(null);
   const [showHelpDialog, setShowHelpDialog] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState('');
@@ -35,6 +33,19 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
       console.error('Error generating QR code:', error);
     }
   };
+
+  const loadSessionHistory = async () => {
+    try {
+      const sessions = await sessionAPI.getAllSessions();
+      setSessionHistory(sessions);
+    } catch (error) {
+      console.error('Failed to load sessions:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadSessionHistory();
+  }, []);
 
   useEffect(() => {
     if (activeSession?.link) {
@@ -108,42 +119,50 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
     setCurrentView('existingSession');
   };
 
-  const createSession = () => {
+  const createSession = async () => {
     if (!sessionName.trim()) {
       setErrorMessage('Please enter a session name!');
       return;
     }
-    setErrorMessage('');
-    const newCode = generateSessionCode();
-    const session = {
-      name: sessionName,
-      code: newCode,
-      id: `#${Math.floor(Math.random() * 100000)}`,
-      link: `fairflix.com/join/${newCode}`,
-      createdAt: new Date().toISOString()
-    };
-    const updatedHistory = [...sessionHistory, session];
-    setActiveSession(session);
-    setSessionHistory(updatedHistory);
-    localStorage.setItem('fairflix-sessions', JSON.stringify(updatedHistory));
-    setCurrentView('sessionActive');
+    
+    try {
+      setErrorMessage('');
+      const newCode = generateSessionCode();
+      const sessionData = {
+        name: sessionName,
+        code: newCode,
+        id: `#${Math.floor(Math.random() * 100000)}`,
+        link: `fairflix.com/join/${newCode}`
+      };
+      
+      const session = await sessionAPI.createSession(sessionData);
+      setActiveSession(session);
+      loadSessionHistory();
+      setCurrentView('sessionActive');
+    } catch (error) {
+      setErrorMessage('Failed to create session. Please try again.');
+    }
   };
 
-  const hostExistingSession = () => {
+  const hostExistingSession = async () => {
     if (!sessionCode.trim()) {
       setErrorMessage('Please enter a session code!');
       return;
     }
     
-    const code = sessionCode.toUpperCase();
-    const session = sessionHistory.find(s => s.code === code);
-    
-    if (session) {
-      setErrorMessage('');
-      setActiveSession(session);
-      setCurrentView('sessionActive');
-    } else {
-      setErrorMessage(`Session code "${code}" not found. Please check the code or create a new session.`);
+    try {
+      const code = sessionCode.toUpperCase();
+      const session = await sessionAPI.getSessionByCode(code);
+      
+      if (session) {
+        setErrorMessage('');
+        setActiveSession(session);
+        setCurrentView('sessionActive');
+      } else {
+        setErrorMessage(`Session code "${code}" not found. Please check the code or create a new session.`);
+      }
+    } catch (error) {
+      setErrorMessage('Failed to find session. Please try again.');
     }
   };
 
@@ -249,7 +268,6 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
                     setSessionCode(session.code);
                   }}>
                     <span>{session.name}</span>
-                    <span>{session.code}</span>
                   </div>
                 ))}
               </div>
