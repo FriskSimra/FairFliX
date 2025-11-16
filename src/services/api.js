@@ -33,3 +33,28 @@ export const sessionAPI = {
     return response.json();
   }
 };
+
+// Movie API functions
+export const getAllMovies = async () => {
+  const response = await fetch(`${API_BASE_URL}/movies`);
+  if (!response.ok) throw new Error('Failed to fetch movies');
+  return response.json();
+};
+
+export const getCuratedMovies = async (sessionCode) => {
+  const response = await fetch(`${API_BASE_URL}/movies/curated/${sessionCode}`);
+  if (!response.ok) throw new Error('Failed to fetch curated movies');
+  return response.json();
+};
+
+export const updateSessionPreferences = async (sessionCode, preferences) => {
+  const response = await fetch(`${API_BASE_URL}/sessions/${sessionCode}/preferences`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(preferences),
+  });
+  if (!response.ok) throw new Error('Failed to update preferences');
+  return response.json();
+};
