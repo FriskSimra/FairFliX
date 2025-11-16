@@ -524,6 +524,11 @@ html, body {
   overflow-y: auto;
 }
 
+.create-session-content.form-view {
+  align-items: center;
+  overflow: hidden;
+}
+
 .film-reel-container {
   position: absolute;
   top: 0px;
@@ -559,12 +564,12 @@ html, body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: clamp(20px, 4vh, 40px);
-  padding: 20px 0 80px 0;
+  gap: clamp(10px, 2vh, 20px);
+  padding: 40px 20px 100px 20px;
 }
 
 .session-title {
-  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-size: clamp(2.2rem, 100vw, 4rem);
   font-family: 'Playfair Display', serif;
   font-weight: 400;
   margin: 0;
@@ -796,6 +801,10 @@ html, body {
   padding: 30px;
   border: 2px solid rgba(255,255,255,0.3);
   min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 150px;
 }
 
 .input-group {
@@ -867,12 +876,12 @@ html, body {
 }
 
 .error-message {
-  background: rgba(255,0,0,0.1);
+  background: rgba(255,0,0,0.4);
   border: 1px solid rgba(255,0,0,0.3);
   border-radius: 8px;
   padding: 10px;
   margin-bottom: 15px;
-  color: #ff6b6b;
+  color: #ffffff;
   font-family: 'Crimson Text', serif;
   font-size: 0.9rem;
   text-align: center;
@@ -1513,4 +1522,180 @@ html, body {
   .login-divider {
     margin: clamp(10px, 2vh, 15px) 0;
   }
+}
+
+.join-subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255,255,255,0.9);
+  font-family: 'Crimson Text', serif;
+  margin-bottom: 5px;
+}
+
+.join-main-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 20px;
+}
+
+.join-input-section {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid rgba(255,255,255,0.25);
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.ticket-image-container {
+  position: absolute;
+  top: -30px;
+  left: -30px;
+  z-index: 2;
+}
+
+.ticket-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+.ticket-booth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticket-booth-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
+}
+
+.join-input {
+  font-size: 1.1rem;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 500;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.join-btn-form {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #8A5950, #155263);
+  border: none;
+  border-radius: 16px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Crimson Text', serif;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(138, 89, 80, 0.3);
+}
+
+.join-btn-form:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(21,82,99,0.4);
+}
+
+.join-help-section {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.25);
+  max-width: 450px;
+  text-align: left;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.join-help-section h3 {
+  color: #ffd05b;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+.join-help-section p {
+  color: white;
+  font-family: 'Crimson Text', serif;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.joined-status {
+  color: #b4ffb7;
+  font-size: 1.2rem;
+  font-family: 'Crimson Text', serif;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.theater-icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+}
+
+.theater-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 1px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+.theater-label {
+  color: rgba(255,255,255,0.8);
+  font-family: 'Crimson Text', serif;
+  font-size: 1.1rem;
+}
+
+.thumbs-up-btn {
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.thumbs-up-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.thumbs-up-btn.ready {
+  background: rgba(76, 175, 80, 0.8);
+  border-color: rgba(76, 175, 80, 1);
+  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.4);
+}
+
+.thumbs-up-btn.ready:hover {
+  background: rgba(76, 175, 80, 1);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
 }

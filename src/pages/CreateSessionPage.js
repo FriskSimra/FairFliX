@@ -110,7 +110,7 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
 
   const createSession = () => {
     if (!sessionName.trim()) {
-      setErrorMessage('Please enter a session name');
+      setErrorMessage('Please enter a session name!');
       return;
     }
     setErrorMessage('');
@@ -131,7 +131,7 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
 
   const hostExistingSession = () => {
     if (!sessionCode.trim()) {
-      setErrorMessage('Please enter a session code');
+      setErrorMessage('Please enter a session code!');
       return;
     }
     
@@ -188,14 +188,6 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
               placeholder="Movie Night Squad"
               className="session-input"
             />
-          </div>
-          
-          <div className="input-group">
-            <label>Session Code:</label>
-            <div className="code-input-container">
-              <input type="text" value="AUTO" readOnly className="session-input code-input" />
-              <button className="refresh-btn">🔄</button>
-            </div>
           </div>
           
           {errorMessage && <div className="error-message">{errorMessage}</div>}
@@ -332,7 +324,7 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
         </div>
       </header>
       
-      <main className={`create-session-content ${currentView !== 'selection' ? 'scrollable' : ''}`}>
+      <main className={`create-session-content ${currentView === 'sessionActive' ? 'scrollable' : currentView !== 'selection' ? 'form-view' : ''}`}>
         <div className="film-reel-container left-container">
           <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
           <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />

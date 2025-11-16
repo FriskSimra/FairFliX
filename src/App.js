@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import CreateSessionPage from './pages/CreateSessionPage';
+import JoinSessionPage from './pages/JoinSessionPage';
 import backButtonImg from './assets/fairflix_back_button.png';
 
 function App() {
@@ -13,8 +14,8 @@ function App() {
   const [pendingAction, setPendingAction] = useState(null);
 
   const handleNavigation = (page, action = null) => {
-    if (page === 'createSession' && !isLoggedIn) {
-      setPendingAction('createSession');
+    if ((page === 'createSession' || page === 'joinSession') && !isLoggedIn) {
+      setPendingAction(page);
       setNavigationHistory(prev => [...prev, 'login']);
       setCurrentPage('login');
       return;
@@ -25,11 +26,12 @@ function App() {
     
     if (action === 'login' || action === 'signup') {
       setIsLoggedIn(true);
-      if (pendingAction === 'createSession') {
+      if (pendingAction) {
+        const actionToExecute = pendingAction;
         setPendingAction(null);
         setTimeout(() => {
-          setNavigationHistory(prev => [...prev, 'createSession']);
-          setCurrentPage('createSession');
+          setNavigationHistory(prev => [...prev, actionToExecute]);
+          setCurrentPage(actionToExecute);
         }, 100);
       }
     }
@@ -59,6 +61,8 @@ function App() {
         return <SignupPage {...pageProps} />;
       case 'createSession':
         return <CreateSessionPage {...pageProps} />;
+      case 'joinSession':
+        return <JoinSessionPage {...pageProps} />;
       default:
         return <LandingPage {...pageProps} />;
     }

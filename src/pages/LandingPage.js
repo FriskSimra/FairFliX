@@ -21,7 +21,7 @@ function LandingPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn 
         
         <div className="button-container">
           <button className="action-btn create-btn" onClick={() => onNavigate('createSession')}>Create a Session</button>
-          <button className="action-btn join-btn">Join a Session</button>
+          <button className="action-btn join-btn" onClick={() => onNavigate('joinSession')}>Join a Session</button>
         </div>
       </main>
       
