@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { sessionAPI } from '../services/api';
+import { sessionAPI, updateSessionPreferences } from '../services/api';
 import fairflixLogo from '../assets/FairFliX_logo.png';
 import filmReelBg from '../assets/film_reel_bg_addon.png';
 import joinTicket from '../assets/join_session_ticket.png';
@@ -12,9 +12,9 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
   const [sessionCode, setSessionCode] = useState('');
   const [joinedSession, setJoinedSession] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const [selectedGenre, setSelectedGenre] = useState('Drama');
+  const [selectedGenre, setSelectedGenre] = useState('Action');
   const [selectedLanguage, setSelectedLanguage] = useState('English');
-  const [selectedPlatform, setSelectedPlatform] = useState('Disney+');
+  const [selectedPlatform, setSelectedPlatform] = useState('Netflix');
   const [readyUsers, setReadyUsers] = useState(3);
   const [isReady, setIsReady] = useState(false);
 
@@ -41,9 +41,9 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
   };
 
   const renderPollSection = () => {
-    const genres = ['Action & Adventure', 'Comedy', 'Drama', 'Horror', 'Thriller', 'Romance', 'Sci-Fi', 'Fantasy', 'Documentary'];
+    const genres = ['Action', 'Comedy', 'Drama', 'Horror', 'Animation', 'Romance', 'Sci-Fi', 'Fantasy', 'Documentary'];
     const languages = ['English', 'Spanish', 'French', 'German', 'Italian', 'Japanese', 'Korean', 'Chinese', 'Portuguese'];
-    const platforms = ['Netflix', 'Disney+', 'HBO Max', 'Prime Video', 'Hulu', 'Apple TV+', 'Paramount+', 'Peacock', 'YouTube'];
+    const platforms = ['Netflix', 'Disney+', 'HBO Max', 'Amazon Prime', 'Hulu', 'Apple TV+', 'Crunchyroll', 'Paramount+'];
 
     return (
       <div className="polls-section">
@@ -55,7 +55,20 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
               <div 
                 key={genre}
                 className={`poll-option ${selectedGenre === genre ? 'selected' : ''}`}
-                onClick={() => setSelectedGenre(genre)}
+                onClick={async () => {
+                  setSelectedGenre(genre);
+                  if (joinedSession) {
+                    try {
+                      await updateSessionPreferences(joinedSession.code, {
+                        genres: [genre],
+                        languages: [selectedLanguage],
+                        platforms: [selectedPlatform]
+                      });
+                    } catch (error) {
+                      console.log('Preferences will be saved later');
+                    }
+                  }
+                }}
               >
                 {genre}
               </div>
@@ -71,7 +84,20 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
               <div 
                 key={language}
                 className={`poll-option ${selectedLanguage === language ? 'selected' : ''}`}
-                onClick={() => setSelectedLanguage(language)}
+                onClick={async () => {
+                  setSelectedLanguage(language);
+                  if (joinedSession) {
+                    try {
+                      await updateSessionPreferences(joinedSession.code, {
+                        genres: [selectedGenre],
+                        languages: [language],
+                        platforms: [selectedPlatform]
+                      });
+                    } catch (error) {
+                      console.log('Preferences will be saved later');
+                    }
+                  }
+                }}
               >
                 {language}
               </div>
@@ -87,7 +113,20 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
               <div 
                 key={platform}
                 className={`poll-option ${selectedPlatform === platform ? 'selected' : ''}`}
-                onClick={() => setSelectedPlatform(platform)}
+                onClick={async () => {
+                  setSelectedPlatform(platform);
+                  if (joinedSession) {
+                    try {
+                      await updateSessionPreferences(joinedSession.code, {
+                        genres: [selectedGenre],
+                        languages: [selectedLanguage],
+                        platforms: [platform]
+                      });
+                    } catch (error) {
+                      console.log('Preferences will be saved later');
+                    }
+                  }
+                }}
               >
                 {platform}
               </div>
@@ -172,7 +211,19 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
         >
           👍
         </button>
-        <button className="begin-selection-btn">Pick a few movies</button>
+        <button 
+          className="begin-selection-btn"
+          onClick={() => onNavigate('movieSelection', { 
+            sessionCode: joinedSession?.code,
+            preferences: {
+              genres: [selectedGenre],
+              languages: [selectedLanguage],
+              platforms: [selectedPlatform]
+            }
+          })}
+        >
+          Pick a few movies
+        </button>
       </div>
     </div>
   );

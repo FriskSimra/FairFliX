@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import CreateSessionPage from './pages/CreateSessionPage';
 import JoinSessionPage from './pages/JoinSessionPage';
+import MovieSelectionPage from './pages/MovieSelectionPage';
 import backButtonImg from './assets/fairflix_back_button.png';
 
 function App() {
@@ -12,8 +13,9 @@ function App() {
   const [navigationHistory, setNavigationHistory] = useState(['landing']);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [pendingAction, setPendingAction] = useState(null);
+  const [sessionData, setSessionData] = useState(null);
 
-  const handleNavigation = (page, action = null) => {
+  const handleNavigation = (page, data = null) => {
     if ((page === 'createSession' || page === 'joinSession') && !isLoggedIn) {
       setPendingAction(page);
       setNavigationHistory(prev => [...prev, 'login']);
@@ -21,10 +23,15 @@ function App() {
       return;
     }
     
+    // Store session data for movie selection
+    if (data && (data.sessionCode || data.selectedMovie)) {
+      setSessionData(data);
+    }
+    
     setNavigationHistory(prev => [...prev, page]);
     setCurrentPage(page);
     
-    if (action === 'login' || action === 'signup') {
+    if (data === 'login' || data === 'signup') {
       setIsLoggedIn(true);
       if (pendingAction) {
         const actionToExecute = pendingAction;
@@ -51,7 +58,8 @@ function App() {
       onBack: handleBack,
       canGoBack: navigationHistory.length > 1,
       backButtonImg,
-      isLoggedIn
+      isLoggedIn,
+      sessionData
     };
 
     switch(currentPage) {
@@ -63,6 +71,8 @@ function App() {
         return <CreateSessionPage {...pageProps} />;
       case 'joinSession':
         return <JoinSessionPage {...pageProps} />;
+      case 'movieSelection':
+        return <MovieSelectionPage {...pageProps} sessionCode={sessionData?.sessionCode} />;
       default:
         return <LandingPage {...pageProps} />;
     }
