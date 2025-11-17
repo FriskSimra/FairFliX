@@ -92,8 +92,14 @@ const MovieSelectionPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sess
           <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
           <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
           <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
+          <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
+          <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
+          <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
         </div>
         <div className="film-reel-container right-container">
+          <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
+          <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
+          <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
           <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
           <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
           <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
@@ -112,7 +118,7 @@ const MovieSelectionPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sess
                 className={`movie-card ${selectedMovie?.id === movie.id ? 'selected' : ''}`}
                 onClick={() => handleMovieSelect(movie)}
               >
-                <div className="movie-poster">
+                <div className="selection-movie-poster">
                   <img src={movie.poster} alt={movie.title} />
                   {selectedMovie?.id === movie.id && (
                     <div className="selection-overlay">
@@ -120,21 +126,21 @@ const MovieSelectionPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sess
                     </div>
                   )}
                 </div>
-                <div className="movie-info">
-                  <h3 className="movie-title">{movie.title}</h3>
-                  <div className="movie-details">
+                <div className="selection-movie-info">
+                  <h3 className="selection-movie-title">{movie.title}</h3>
+                  <div className="selection-movie-details">
                     <span className="year">{movie.year}</span>
                     <span className="genre">{movie.genre.join(', ')}</span>
                     <span className="duration">{movie.duration}</span>
                   </div>
-                  <div className="movie-ratings">
+                  <div className="selection-movie-ratings">
                     <span className="imdb">★ {movie.imdbRating}/10 IMDb</span>
                     <span className="rt">{movie.rottenTomatoes}% RT</span>
                   </div>
-                  <div className="platforms">
+                  <div className="selection-platforms">
                     Available on: {movie.platforms.join(', ')}
                   </div>
-                  <div className="movie-description">
+                  <div className="selection-movie-description">
                     {movie.description}
                   </div>
                 </div>

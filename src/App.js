@@ -6,6 +6,9 @@ import SignupPage from './pages/SignupPage';
 import CreateSessionPage from './pages/CreateSessionPage';
 import JoinSessionPage from './pages/JoinSessionPage';
 import MovieSelectionPage from './pages/MovieSelectionPage';
+import VotingPage from './pages/VotingPage';
+import VotingLoadingPage from './pages/VotingLoadingPage';
+import VotingResultsPage from './pages/VotingResultsPage';
 import backButtonImg from './assets/fairflix_back_button.png';
 
 function App() {
@@ -23,9 +26,9 @@ function App() {
       return;
     }
     
-    // Store session data for movie selection
-    if (data && (data.sessionCode || data.selectedMovie)) {
-      setSessionData(data);
+    // Store session data for movie selection and voting results
+    if (data && (data.sessionCode || data.selectedMovie || data.movies || data.votingResults)) {
+      setSessionData(prev => ({ ...prev, ...data }));
     }
     
     setNavigationHistory(prev => [...prev, page]);
@@ -73,6 +76,12 @@ function App() {
         return <JoinSessionPage {...pageProps} />;
       case 'movieSelection':
         return <MovieSelectionPage {...pageProps} sessionCode={sessionData?.sessionCode} />;
+      case 'voting':
+        return <VotingPage {...pageProps} />;
+      case 'voting-loading':
+        return <VotingLoadingPage {...pageProps} />;
+      case 'voting-results':
+        return <VotingResultsPage {...pageProps} />;
       default:
         return <LandingPage {...pageProps} />;
     }
