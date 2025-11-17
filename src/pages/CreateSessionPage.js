@@ -29,7 +29,7 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLog
 
   const generateQRCode = async (url) => {
     try {
-      const qrDataUrl = await QRCode.toDataURL(url);
+      const qrDataUrl = await QRCode.toDataURL('https://www.youtube.com/watch?v=E4WlUXrJgy4');
       setQrCodeUrl(qrDataUrl);
     } catch (error) {
       console.error('Error generating QR code:', error);
@@ -173,7 +173,7 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLog
         name: sessionName,
         code: newCode,
         id: `#${Math.floor(Math.random() * 100000)}`,
-        link: `fairflix.com/join/${newCode}`
+        link: `https://www.youtube.com/watch?v=E4WlUXrJgy4`
       };
       
       const session = await sessionAPI.createSession(sessionData);
@@ -347,11 +347,12 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLog
             <div className="session-info-item" style={{gridColumn: 'span 2'}}>
               <span className="info-label">Invite Link:</span>
               <span className="info-value copy-link" onClick={(e) => {
-                navigator.clipboard.writeText(activeSession?.link);
+                navigator.clipboard.writeText('https://www.youtube.com/watch?v=E4WlUXrJgy4');
                 e.target.classList.add('copy-feedback');
                 setTimeout(() => e.target.classList.remove('copy-feedback'), 1000);
                 setNotification({ message: 'Link copied to clipboard!', type: 'success' });
-              }}>{activeSession?.link} 🔗</span>
+              }}>Session Link 🔗</span>
+              <div style={{fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', marginTop: '5px', fontStyle: 'italic'}}>*QR code and session link still under construction.</div>
             </div>
           </div>
           <div className="qr-code-container">

@@ -1979,7 +1979,7 @@ html, body {
 
 .voting-container {
   width: 100%;
-  max-width: 380px;
+  max-width: 320px;
   text-align: center;
   z-index: 1;
   display: flex;
@@ -2042,7 +2042,7 @@ html, body {
 .movie-poster {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .swipe-indicators {
