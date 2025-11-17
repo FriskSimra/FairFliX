@@ -2299,13 +2299,15 @@ html, body {
   justify-content: center;
   text-align: center;
   gap: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid rgba(255,255,255,0.3);
-  border-top: 4px solid #FFC93C;
+  width: 100px;
+  height: 100px;
+  border: 6px solid rgba(255,255,255,0.3);
+  border-top: 6px solid #FFC93C;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -2316,17 +2318,203 @@ html, body {
 }
 
 .loading-title {
-  font-size: 2rem;
+  font-size: 3rem;
   font-family: 'Playfair Display', serif;
   color: white;
   margin: 0;
 }
 
 .loading-subtitle {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   font-family: 'Crimson Text', serif;
   color: rgba(255,255,255,0.8);
   margin: 0;
+}
+
+.voting-animation-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  opacity: 0.3;
+  overflow: hidden;
+}
+
+.ballot-box {
+  width: 200px;
+  height: 120px;
+  background: linear-gradient(145deg, #2c3e50, #34495e);
+  border-radius: 12px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  animation: ballotBoxPulse 3s ease-in-out infinite;
+}
+
+.ballot-slot {
+  width: 60px;
+  height: 4px;
+  background: #1a252f;
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.ballot-papers {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ballot-paper {
+  width: 30px;
+  height: 20px;
+  background: white;
+  position: absolute;
+  border-radius: 2px;
+  animation: paperDrop 3s ease-in-out infinite;
+}
+
+.ballot-1 {
+  animation-delay: 0s;
+  left: -15px;
+}
+
+.ballot-2 {
+  animation-delay: 1s;
+  left: 0px;
+}
+
+.ballot-3 {
+  animation-delay: 2s;
+  left: 15px;
+}
+
+.floating-votes {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.vote-bubble {
+  position: absolute;
+  font-size: 48px;
+  animation: floatVote 6s ease-in-out infinite;
+  opacity: 0.99;
+}
+
+.vote-1 {
+  top: 15%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.vote-2 {
+  top: 70%;
+  right: 15%;
+  animation-delay: 1.2s;
+}
+
+.vote-3 {
+  top: 25%;
+  right: 25%;
+  animation-delay: 2.4s;
+}
+
+.vote-4 {
+  bottom: 25%;
+  left: 25%;
+  animation-delay: 3.6s;
+}
+
+.vote-5 {
+  top: 45%;
+  left: 10%;
+  animation-delay: 4.8s;
+}
+
+.progress-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FFC93C;
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+.dot-1 {
+  animation-delay: 0s;
+}
+
+.dot-2 {
+  animation-delay: 0.3s;
+}
+
+.dot-3 {
+  animation-delay: 0.6s;
+}
+
+@keyframes ballotBoxPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+@keyframes paperDrop {
+  0% {
+    transform: translateY(-30px) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(0px) rotate(5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10px) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+@keyframes floatVote {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
 }
 
 /* -------------------------------------------------- */

@@ -25,7 +25,7 @@ function LandingPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn 
         </div>
       </main>
       
-      <Footer onNavigate={onNavigate} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
     </div>
   );
 }

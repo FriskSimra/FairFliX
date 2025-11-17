@@ -9,6 +9,7 @@ import MovieSelectionPage from './pages/MovieSelectionPage';
 import VotingPage from './pages/VotingPage';
 import VotingLoadingPage from './pages/VotingLoadingPage';
 import VotingResultsPage from './pages/VotingResultsPage';
+import AboutPage from './pages/AboutPage';
 import backButtonImg from './assets/fairflix_back_button.png';
 
 function App() {
@@ -82,6 +83,8 @@ function App() {
         return <VotingLoadingPage {...pageProps} />;
       case 'voting-results':
         return <VotingResultsPage {...pageProps} />;
+      case 'about':
+        return <AboutPage {...pageProps} />;
       default:
         return <LandingPage {...pageProps} />;
     }

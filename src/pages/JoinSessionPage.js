@@ -7,7 +7,7 @@ import ticketBooth from '../assets/join_session_ticketbooth.png';
 import theaterImage from '../assets/session_joined_theatre.png';
 import Footer from '../components/Footer';
 
-function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
+function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn }) {
   const [currentView, setCurrentView] = useState('join');
   const [sessionCode, setSessionCode] = useState('');
   const [joinedSession, setJoinedSession] = useState(null);
@@ -262,7 +262,7 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
         {currentView === 'joined' && renderJoinedView()}
       </main>
       
-      <Footer onNavigate={onNavigate} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
     </div>
   );
 }

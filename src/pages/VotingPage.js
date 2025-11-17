@@ -5,7 +5,7 @@ import filmReelBg from '../assets/film_reel_bg_addon.png';
 import Footer from '../components/Footer';
 import '../App.css';
 
-const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData }) => {
+const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData, isLoggedIn }) => {
   const [movies, setMovies] = useState([]);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const [votes, setVotes] = useState({ likes: [], dislikes: [] });
@@ -145,7 +145,7 @@ const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData 
         <main className="voting-content">
           <div className="loading">Loading movies...</div>
         </main>
-        <Footer onNavigate={onNavigate} />
+        <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
       </div>
     );
   }
@@ -177,7 +177,7 @@ const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData 
             <p>Dislikes: {votes.dislikes.length}</p>
           </div>
         </main>
-        <Footer onNavigate={onNavigate} />
+        <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
       </div>
     );
   }
@@ -330,7 +330,7 @@ const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData 
         </div>
       </main>
       
-      <Footer onNavigate={onNavigate} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import fairflixLogo from '../assets/FairFliX_logo.png';
 import googleLogo from '../assets/google_login.png';
 import Footer from '../components/Footer';
 
-function SignupPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
+function SignupPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn }) {
   return (
     <div className="App">
       <header className="header-bar">
@@ -58,7 +58,7 @@ function SignupPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
               <span>or</span>
             </div>
             
-            <img src={googleLogo} alt="Continue with Google" className="google-login-img" />
+            <img src={googleLogo} alt="Continue with Google" className="google-login-img" onClick={() => onNavigate('landing', 'signup')} />
             
             <button className="signup-link-btn" onClick={() => onNavigate('login')}>
               Already have an account? Log in
@@ -67,7 +67,7 @@ function SignupPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
         </div>
       </main>
       
-      <Footer onNavigate={onNavigate} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
     </div>
   );
 }

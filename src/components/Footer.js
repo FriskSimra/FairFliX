@@ -3,7 +3,7 @@ import metaLogo from '../assets/meta_logo.png';
 import instaLogo from '../assets/insta_logo.png';
 import twitterLogo from '../assets/twitter_logo.png';
 
-function Footer({ onNavigate }) {
+function Footer({ onNavigate, isLoggedIn }) {
   const [showProfileDialog, setShowProfileDialog] = useState(false);
 
   const toggleProfileDialog = () => {
@@ -20,16 +20,32 @@ function Footer({ onNavigate }) {
     setShowProfileDialog(false);
   };
 
+  const handleSignout = () => {
+    onNavigate('landing');
+    setShowProfileDialog(false);
+  };
+
+  const handleAbout = () => {
+    onNavigate('about');
+    setShowProfileDialog(false);
+  };
+
   return (
     <footer className="footer-bar">
       <div className="footer-left">
         <div className="profile-icon" onClick={toggleProfileDialog}>👤</div>
         {showProfileDialog && (
           <div className="profile-dialog">
-            <button className="dialog-btn login-btn" onClick={handleLogin}>Log in</button>
-            <button className="dialog-btn signup-btn" onClick={handleSignup}>Sign up</button>
+            {isLoggedIn ? (
+              <button className="dialog-btn signup-btn" onClick={handleSignout}>Sign out</button>
+            ) : (
+              <>
+                <button className="dialog-btn login-btn" onClick={handleLogin}>Log in</button>
+                <button className="dialog-btn signup-btn" onClick={handleSignup}>Sign up</button>
+              </>
+            )}
             <button className="dialog-btn">Help & Support</button>
-            <button className="dialog-btn">About</button>
+            <button className="dialog-btn" onClick={handleAbout}>About</button>
           </div>
         )}
       </div>

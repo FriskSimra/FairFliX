@@ -4,7 +4,7 @@ import filmReelBg from '../assets/film_reel_bg_addon.png';
 import Footer from '../components/Footer';
 import '../App.css';
 
-const VotingLoadingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData }) => {
+const VotingLoadingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData, isLoggedIn }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       // Simulate vote calculation and navigate to results
@@ -78,6 +78,16 @@ const VotingLoadingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessi
           <img src={filmReelBg} alt="Film Reel" className="film-reel-segment" />
         </div>
         
+        <div className="voting-animation-bg">
+          <div className="floating-votes">
+            <div className="vote-bubble vote-1">👍</div>
+            <div className="vote-bubble vote-2">👎</div>
+            <div className="vote-bubble vote-3">⭐</div>
+            <div className="vote-bubble vote-4">🎬</div>
+            <div className="vote-bubble vote-5">🍿</div>
+          </div>
+        </div>
+        
         <div className="loading-container">
           <div className="loading-spinner"></div>
           <h2 className="loading-title">Calculating Votes...</h2>
@@ -85,7 +95,7 @@ const VotingLoadingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessi
         </div>
       </main>
       
-      <Footer onNavigate={onNavigate} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
     </div>
   );
 };

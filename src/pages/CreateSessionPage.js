@@ -7,7 +7,7 @@ import actionBoxFull from '../assets/actionbox_full.png';
 import popcornBucket from '../assets/popcorn_bucket.png';
 import Footer from '../components/Footer';
 
-function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
+function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn }) {
   const [currentView, setCurrentView] = useState('selection');
   const [sessionName, setSessionName] = useState('');
   const [sessionCode, setSessionCode] = useState('');
@@ -427,7 +427,7 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg }) {
         </div>
       )}
       
-      <Footer onNavigate={onNavigate} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
     </div>
   );
 }
