@@ -19,6 +19,11 @@ function App() {
   const [pendingAction, setPendingAction] = useState(null);
   const [sessionData, setSessionData] = useState(null);
 
+  const handleSignout = () => {
+    setIsLoggedIn(false);
+    setPendingAction(null);
+  };
+
   const handleNavigation = (page, data = null) => {
     if ((page === 'createSession' || page === 'joinSession') && !isLoggedIn) {
       setPendingAction(page);
@@ -63,7 +68,8 @@ function App() {
       canGoBack: navigationHistory.length > 1,
       backButtonImg,
       isLoggedIn,
-      sessionData
+      sessionData,
+      onSignout: handleSignout
     };
 
     switch(currentPage) {

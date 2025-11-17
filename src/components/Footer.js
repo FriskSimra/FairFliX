@@ -2,9 +2,11 @@ import { useState } from 'react';
 import metaLogo from '../assets/meta_logo.png';
 import instaLogo from '../assets/insta_logo.png';
 import twitterLogo from '../assets/twitter_logo.png';
+import Notification from './Notification';
 
-function Footer({ onNavigate, isLoggedIn }) {
+function Footer({ onNavigate, isLoggedIn, onSignout }) {
   const [showProfileDialog, setShowProfileDialog] = useState(false);
+  const [notification, setNotification] = useState(null);
 
   const toggleProfileDialog = () => {
     setShowProfileDialog(!showProfileDialog);
@@ -21,8 +23,12 @@ function Footer({ onNavigate, isLoggedIn }) {
   };
 
   const handleSignout = () => {
-    onNavigate('landing');
+    if (onSignout) onSignout();
+    setNotification({ message: 'Signed out successfully!', type: 'success' });
     setShowProfileDialog(false);
+    setTimeout(() => {
+      onNavigate('landing');
+    }, 500);
   };
 
   const handleAbout = () => {
@@ -50,16 +56,23 @@ function Footer({ onNavigate, isLoggedIn }) {
         )}
       </div>
       <div className="footer-right">
-        <a href="#" className="social-icon">
+        <a href="https://facebook.com" className="social-icon">
           <img src={metaLogo} alt="Facebook" className="social-img" />
         </a>
-        <a href="#" className="social-icon">
+        <a href="https://instagram.com" className="social-icon">
           <img src={instaLogo} alt="Instagram" className="social-img" />
         </a>
-        <a href="#" className="social-icon">
+        <a href="https://twitter.com" className="social-icon">
           <img src={twitterLogo} alt="Twitter" className="social-img" />
         </a>
       </div>
+      {notification && (
+        <Notification 
+          message={notification.message} 
+          type={notification.type} 
+          onClose={() => setNotification(null)} 
+        />
+      )}
     </footer>
   );
 }

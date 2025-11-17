@@ -3,9 +3,10 @@ import { getAllMovies } from '../services/api';
 import fairflixLogo from '../assets/FairFliX_logo.png';
 import filmReelBg from '../assets/film_reel_bg_addon.png';
 import Footer from '../components/Footer';
+import Notification from '../components/Notification';
 import '../App.css';
 
-const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData, isLoggedIn }) => {
+const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData, isLoggedIn, onSignout }) => {
   const [movies, setMovies] = useState([]);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const [votes, setVotes] = useState({ likes: [], dislikes: [] });
@@ -15,6 +16,7 @@ const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData,
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const [isAnimating, setIsAnimating] = useState(false);
   const [showVoteIndicator, setShowVoteIndicator] = useState(null);
+  const [notification, setNotification] = useState(null);
   const cardRef = useRef(null);
 
   useEffect(() => {
@@ -56,6 +58,12 @@ const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData,
       ...prev,
       [voteType]: [...prev[voteType], movieId]
     }));
+    
+    setNotification({ 
+      message: voteType === 'likes' ? 'Movie liked! 👍' : 'Movie disliked! 👎', 
+      type: 'info',
+      duration: 1500
+    });
     
     // Animate card exit
     setTimeout(() => {
@@ -145,7 +153,7 @@ const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData,
         <main className="voting-content">
           <div className="loading">Loading movies...</div>
         </main>
-        <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+        <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
       </div>
     );
   }
@@ -177,7 +185,7 @@ const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData,
             <p>Dislikes: {votes.dislikes.length}</p>
           </div>
         </main>
-        <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+        <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
       </div>
     );
   }
@@ -331,6 +339,14 @@ const VotingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData,
       </main>
       
       <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+      {notification && (
+        <Notification 
+          message={notification.message} 
+          type={notification.type} 
+          duration={notification.duration}
+          onClose={() => setNotification(null)} 
+        />
+      )}
     </div>
   );
 };

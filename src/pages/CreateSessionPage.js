@@ -6,8 +6,9 @@ import filmReelBg from '../assets/film_reel_bg_addon.png';
 import actionBoxFull from '../assets/actionbox_full.png';
 import popcornBucket from '../assets/popcorn_bucket.png';
 import Footer from '../components/Footer';
+import Notification from '../components/Notification';
 
-function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn }) {
+function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn, onSignout }) {
   const [currentView, setCurrentView] = useState('selection');
   const [sessionName, setSessionName] = useState('');
   const [sessionCode, setSessionCode] = useState('');
@@ -19,7 +20,8 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLog
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [selectedPlatform, setSelectedPlatform] = useState('Netflix');
   const [errorMessage, setErrorMessage] = useState('');
-  const [readyUsers, setReadyUsers] = useState(3);
+  const [readyUsers] = useState(3);
+  const [notification, setNotification] = useState(null);
 
   const generateSessionCode = () => {
     return Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -178,6 +180,7 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLog
       setActiveSession(session);
       loadSessionHistory();
       setCurrentView('sessionActive');
+      setNotification({ message: 'Session created successfully!', type: 'success' });
     } catch (error) {
       setErrorMessage('Failed to create session. Please try again.');
     }
@@ -197,6 +200,7 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLog
         setErrorMessage('');
         setActiveSession(session);
         setCurrentView('sessionActive');
+        setNotification({ message: 'Session found and activated!', type: 'success' });
       } else {
         setErrorMessage(`Session code "${code}" not found. Please check the code or create a new session.`);
       }
@@ -249,7 +253,11 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLog
           </div>
           
           {errorMessage && <div className="error-message">{errorMessage}</div>}
-          <button className="create-btn-form" onClick={createSession}>CREATE</button>
+          <button className="create-btn-form" onClick={(e) => {
+            e.target.classList.add('button-feedback');
+            setTimeout(() => e.target.classList.remove('button-feedback'), 100);
+            createSession();
+          }}>CREATE</button>
         </div>
         
         <div className="help-section">
@@ -289,7 +297,11 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLog
           </div>
           
           {errorMessage && <div className="error-message">{errorMessage}</div>}
-          <button className="create-btn-form" onClick={hostExistingSession}>HOST</button>
+          <button className="create-btn-form" onClick={(e) => {
+            e.target.classList.add('button-feedback');
+            setTimeout(() => e.target.classList.remove('button-feedback'), 100);
+            hostExistingSession();
+          }}>HOST</button>
         </div>
         
         <div className="history-section">
@@ -334,7 +346,12 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLog
             </div>
             <div className="session-info-item" style={{gridColumn: 'span 2'}}>
               <span className="info-label">Invite Link:</span>
-              <span className="info-value copy-link">{activeSession?.link} 🔗</span>
+              <span className="info-value copy-link" onClick={(e) => {
+                navigator.clipboard.writeText(activeSession?.link);
+                e.target.classList.add('copy-feedback');
+                setTimeout(() => e.target.classList.remove('copy-feedback'), 1000);
+                setNotification({ message: 'Link copied to clipboard!', type: 'success' });
+              }}>{activeSession?.link} 🔗</span>
             </div>
           </div>
           <div className="qr-code-container">
@@ -427,7 +444,14 @@ function CreateSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLog
         </div>
       )}
       
-      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
+      {notification && (
+        <Notification 
+          message={notification.message} 
+          type={notification.type} 
+          onClose={() => setNotification(null)} 
+        />
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import fairflixLogo from '../assets/FairFliX_logo.png';
 import Footer from '../components/Footer';
 
-function LandingPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn }) {
+function LandingPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn, onSignout }) {
   return (
     <div className="App">
       <header className="header-bar">
@@ -25,7 +25,7 @@ function LandingPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn 
         </div>
       </main>
       
-      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
     </div>
   );
 }

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getCuratedMovies, getAllMovies } from '../services/api';
+import { getAllMovies } from '../services/api';
 import fairflixLogo from '../assets/FairFliX_logo.png';
 import filmReelBg from '../assets/film_reel_bg_addon.png';
 import Footer from '../components/Footer';
 import '../App.css';
 
-const MovieSelectionPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionCode, sessionData, isLoggedIn }) => {
+const MovieSelectionPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionCode, sessionData, isLoggedIn, onSignout }) => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -64,7 +64,7 @@ const MovieSelectionPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sess
         <main className="create-session-content">
           <div className="loading">Loading movies...</div>
         </main>
-        <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+        <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
       </div>
     );
   }
@@ -160,7 +160,7 @@ const MovieSelectionPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sess
         </div>
       </main>
       
-      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
     </div>
   );
 };

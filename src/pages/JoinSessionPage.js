@@ -6,8 +6,9 @@ import joinTicket from '../assets/join_session_ticket.png';
 import ticketBooth from '../assets/join_session_ticketbooth.png';
 import theaterImage from '../assets/session_joined_theatre.png';
 import Footer from '../components/Footer';
+import Notification from '../components/Notification';
 
-function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn }) {
+function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn, onSignout }) {
   const [currentView, setCurrentView] = useState('join');
   const [sessionCode, setSessionCode] = useState('');
   const [joinedSession, setJoinedSession] = useState(null);
@@ -15,8 +16,9 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLogge
   const [selectedGenre, setSelectedGenre] = useState('Action');
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [selectedPlatform, setSelectedPlatform] = useState('Netflix');
-  const [readyUsers, setReadyUsers] = useState(3);
+  // const [readyUsers, setReadyUsers] = useState(3);
   const [isReady, setIsReady] = useState(false);
+  const [notification, setNotification] = useState(null);
 
   const joinSession = async () => {
     if (!sessionCode.trim()) {
@@ -32,6 +34,7 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLogge
         setErrorMessage('');
         setJoinedSession(session);
         setCurrentView('joined');
+        setNotification({ message: 'Successfully joined session!', type: 'success' });
       } else {
         setErrorMessage(`Session code "${code}" not found. Please check the code with your host.`);
       }
@@ -159,7 +162,11 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLogge
             maxLength="6"
           />
           {errorMessage && <div className="error-message">{errorMessage}</div>}
-          <button className="join-btn-form" onClick={joinSession}>JOIN</button>
+          <button className="join-btn-form" onClick={(e) => {
+            e.target.classList.add('button-feedback');
+            setTimeout(() => e.target.classList.remove('button-feedback'), 100);
+            joinSession();
+          }}>JOIN</button>
         </div>
         
         <div className="ticket-booth-container">
@@ -207,7 +214,13 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLogge
       <div className="session-controls">
         <button 
           className={`thumbs-up-btn ${isReady ? 'ready' : ''}`}
-          onClick={() => setIsReady(!isReady)}
+          onClick={(e) => {
+            setIsReady(!isReady);
+            setNotification({ 
+              message: isReady ? 'Marked as not ready' : 'Marked as ready!', 
+              type: 'info' 
+            });
+          }}
         >
           👍
         </button>
@@ -262,7 +275,14 @@ function JoinSessionPage({ onNavigate, onBack, canGoBack, backButtonImg, isLogge
         {currentView === 'joined' && renderJoinedView()}
       </main>
       
-      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
+      {notification && (
+        <Notification 
+          message={notification.message} 
+          type={notification.type} 
+          onClose={() => setNotification(null)} 
+        />
+      )}
     </div>
   );
 }

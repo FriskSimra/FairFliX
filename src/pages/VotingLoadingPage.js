@@ -4,7 +4,7 @@ import filmReelBg from '../assets/film_reel_bg_addon.png';
 import Footer from '../components/Footer';
 import '../App.css';
 
-const VotingLoadingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData, isLoggedIn }) => {
+const VotingLoadingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData, isLoggedIn, onSignout }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       // Simulate vote calculation and navigate to results
@@ -95,7 +95,7 @@ const VotingLoadingPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessi
         </div>
       </main>
       
-      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
     </div>
   );
 };

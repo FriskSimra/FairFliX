@@ -4,7 +4,7 @@ import filmReelBg from '../assets/film_reel_bg_addon.png';
 import Footer from '../components/Footer';
 import '../App.css';
 
-const VotingResultsPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData, isLoggedIn }) => {
+const VotingResultsPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessionData, isLoggedIn, onSignout }) => {
   const { votingResults } = sessionData || {};
 
   if (!votingResults) {
@@ -28,7 +28,7 @@ const VotingResultsPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessi
         <main className="create-session-content">
           <div className="loading">No voting results available</div>
         </main>
-        <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+        <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
       </div>
     );
   }
@@ -150,7 +150,7 @@ const VotingResultsPage = ({ onNavigate, onBack, canGoBack, backButtonImg, sessi
         </div>
       </main>
       
-      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
     </div>
   );
 };

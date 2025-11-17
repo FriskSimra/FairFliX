@@ -1,8 +1,21 @@
+import { useState } from 'react';
 import fairflixLogo from '../assets/FairFliX_logo.png';
 import googleLogo from '../assets/google_login.png';
 import Footer from '../components/Footer';
+import Notification from '../components/Notification';
 
-function SignupPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn }) {
+function SignupPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn, onSignout }) {
+  const [notification, setNotification] = useState(null);
+
+  const handleSignup = () => {
+    setNotification({ message: 'Account created successfully!', type: 'success' });
+    setTimeout(() => onNavigate('landing', 'signup'), 500);
+  };
+
+  const handleGoogleSignup = () => {
+    setNotification({ message: 'Signing up with Google...', type: 'info' });
+    setTimeout(() => onNavigate('landing', 'signup'), 500);
+  };
   return (
     <div className="App">
       <header className="header-bar">
@@ -52,13 +65,13 @@ function SignupPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn }
               />
             </div>
             
-            <button className="login-submit-btn" onClick={() => onNavigate('landing', 'signup')}>Sign up</button>
+            <button className="login-submit-btn" onClick={handleSignup}>Sign up</button>
             
             <div className="login-divider">
               <span>or</span>
             </div>
             
-            <img src={googleLogo} alt="Continue with Google" className="google-login-img" onClick={() => onNavigate('landing', 'signup')} />
+            <img src={googleLogo} alt="Continue with Google" className="google-login-img" onClick={handleGoogleSignup} />
             
             <button className="signup-link-btn" onClick={() => onNavigate('login')}>
               Already have an account? Log in
@@ -67,7 +80,14 @@ function SignupPage({ onNavigate, onBack, canGoBack, backButtonImg, isLoggedIn }
         </div>
       </main>
       
-      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} />
+      <Footer onNavigate={onNavigate} isLoggedIn={isLoggedIn} onSignout={onSignout} />
+      {notification && (
+        <Notification 
+          message={notification.message} 
+          type={notification.type} 
+          onClose={() => setNotification(null)} 
+        />
+      )}
     </div>
   );
 }
