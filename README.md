@@ -1,70 +1,150 @@
-# Getting Started with Create React App
+# FairFlix 🎬
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Your new hub for agreeing on what to watch**
 
-## Available Scripts
+FairFlix is a collaborative movie selection platform that helps groups decide what to watch together through interactive voting sessions. Create or join sessions, set preferences, and vote on movies using an intuitive swipe-based interface.
 
-In the project directory, you can run:
+## 🚀 Quick Start
 
-### `npm start`
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Starting the Application
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. **Start the Backend Server**
+   ```bash
+   cd backend
+   npm install
+   npm start
+   ```
+   Backend runs on: `http://localhost:3001`
 
-### `npm test`
+2. **Start the Frontend (in a new terminal)**
+   ```bash
+   npm install
+   npm start
+   ```
+   Frontend runs on: `http://localhost:3000`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📱 Page Functionality
 
-### `npm run build`
+### **Landing Page**
+- Welcome screen with FairFlix branding
+- Two main options: "Create a Session" or "Join a Session"
+- Footer with navigation to About and Login pages
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### **Create Session Page**
+- **Host New Session**: Create a new movie night session with custom name
+- **Host Existing Session**: Resume a previous session using session code
+- **Session Management**: Generate 6-character codes, QR codes, and shareable links
+- **Preference Setting**: Vote on genres, languages, and streaming platforms
+- **Session History**: View and reuse previous sessions
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### **Join Session Page**
+- Enter session code to join existing movie nights
+- Ticket booth themed interface
+- Session validation and error handling
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### **Movie Selection Page**
+- Curated movie recommendations based on session preferences
+- Filter by genre, language, and streaming platform
+- Movie details including ratings, duration, and descriptions
+- Select movies to add to voting pool
 
-### `npm run eject`
+### **Voting Page**
+- **Swipe Interface**: Swipe right to like, left to dislike movies
+- **Button Controls**: Alternative voting using ♥ and ✕ buttons
+- **Trailer Integration**: Watch movie trailers before voting
+- **Progress Tracking**: See voting progress (X of Y movies)
+- **Card Stack**: Visual stack of upcoming movies to vote on
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **Voting Results Page**
+- Display final movie selection based on group votes
+- Show voting statistics and winner
+- Options to start new session or return to main menu
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### **About Page**
+- Information about FairFlix platform
+- How-to guide and features overview
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### **Login/Signup Pages**
+- User authentication (UI ready, backend integration pending)
+- Social media login options
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🛠 Technical Stack
 
-## Learn More
+### Frontend
+- **React 19.2.0** - Modern React with latest features
+- **Create React App** - Development environment
+- **QRCode Library** - QR code generation for session sharing
+- **Custom CSS** - Responsive design with movie theater theming
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Backend
+- **Node.js & Express** - RESTful API server
+- **CORS** - Cross-origin resource sharing
+- **File-based Storage** - JSON files for sessions and movies
+- **Session Management** - Create, join, and manage movie sessions
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📊 API Endpoints
 
-### Code Splitting
+- `GET /api/sessions` - Get all sessions
+- `POST /api/sessions` - Create new session
+- `GET /api/sessions/:code` - Get session by code
+- `PUT /api/sessions/:code/preferences` - Update session preferences
+- `GET /api/movies` - Get all movies
+- `GET /api/movies/curated/:sessionCode` - Get filtered movies for session
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🎯 Key Features
 
-### Analyzing the Bundle Size
+- **Session-based Collaboration**: Create rooms for group movie selection
+- **Smart Filtering**: Movies curated based on group preferences
+- **Interactive Voting**: Tinder-style swipe interface for movie selection
+- **Real-time Updates**: Session preferences update in real-time
+- **Mobile-Friendly**: Responsive design works on all devices
+- **QR Code Sharing**: Easy session joining via QR codes
+- **Movie Database**: 20+ movies with detailed information and trailers
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🎨 Design Features
 
-### Making a Progressive Web App
+- Movie theater themed UI with film reels and popcorn imagery
+- Smooth animations and transitions
+- Drag-and-drop voting interface
+- Visual feedback for user interactions
+- Responsive layout for desktop and mobile
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📁 Project Structure
 
-### Advanced Configuration
+```
+fairflix/
+├── backend/           # Express.js API server
+│   ├── server.js      # Main server file
+│   ├── movies.json    # Movie database
+│   └── sessions.json  # Session storage
+├── src/
+│   ├── pages/         # React page components
+│   ├── components/    # Reusable components
+│   ├── services/      # API service functions
+│   └── assets/        # Images and static files
+└── public/            # Static assets
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🔧 Development Scripts
 
-### Deployment
+### Frontend
+- `npm start` - Start development server (port 3000)
+- `npm test` - Run test suite
+- `npm run build` - Build for production
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Backend
+- `npm start` - Start production server (port 3001)
+- `npm run dev` - Start with nodemon for development
 
-### `npm run build` fails to minify
+## 🚧 Future Enhancements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Real-time WebSocket integration for live voting
+- User authentication and profiles
+- Advanced movie filtering and search
+- Integration with streaming service APIs
+- Mobile app development
+- Social features and movie reviews
